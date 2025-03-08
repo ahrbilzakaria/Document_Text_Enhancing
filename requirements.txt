@@ -1,0 +1,5 @@
+opencv-python
+realesrgan
+basicsr
+gfpgan
+torch
