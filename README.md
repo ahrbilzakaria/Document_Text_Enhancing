@@ -1,15 +1,18 @@
-# Real-ESRGAN Image Upscaler
 
-This script uses **Real-ESRGAN** to upscale images, with options for denoising, specifying the output directory, and setting the upscaling factor. It is designed for document images but can be adapted for other types of images.
+# 📄Document Text Enhancing Pipeline
+
+This project enhances document images using a pipeline of image processing techniques: **Real-ESRGAN** for upscaling, **CLAHE** (Contrast Limited Adaptive Histogram Equalization) for contrast enhancement, and **adaptive unsharp masking** for sharpening.
 
 ---
 
 ## Features
 
-- Upscale images by a factor of 2, 4, or other values (via `--outscale`).
+- **Upscale** images using Real-ESRGAN by a factor of 2, 4, or other values (via `--outscale`).
+- **Enhance contrast** using CLAHE for improved readability of documents.
+- **Apply adaptive sharpening** to fine-tune image details after upscaling and contrast enhancement.
 - Control noise reduction strength with `--denoise_strength` (from 0 to 1).
 - Specify input and output directories.
-- Save results in a custom output folder.
+- Save results in dedicated output folders for each processing step.
 
 ---
 
@@ -28,8 +31,8 @@ This script uses **Real-ESRGAN** to upscale images, with options for denoising, 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/ahrbilzakaria/Document_Text_Enhancing.git
-   cd Document_Text_Enhancing
+   git clone https://github.com/ahrbilzakaria/Document_Text_Enhancing_For_Ocr.git
+   cd Document_Text_Enhancing_For_Ocr
    ```
 
 2. Install dependencies:
@@ -45,32 +48,48 @@ This script uses **Real-ESRGAN** to upscale images, with options for denoising, 
 
 ## Usage
 
-Run the script from the terminal using the following command:
+Run the pipeline script from the terminal to process images through the upscaling, contrast enhancement, and sharpening steps:
 
 ```bash
-python upscale.py <input_folder> --output_dir <output_folder> --outscale <upscale_factor> --denoise_strength <noise_strength>
+python pipeline.py
 ```
 
-### Arguments
+### Pipeline Steps
 
-- `input_folder` (required): The folder containing the images to be upscaled.
-- `--output_dir` (optional): The folder where upscaled images will be saved (default is `results`).
-- `--outscale` (optional): The scale factor for upscaling the images (default is `4`).
-- `--denoise_strength` (optional): Strength of noise reduction, from `0` (no denoising) to `1` (maximum denoising, default is `0.5`).
+1. **Upscaling**:
+   - Images are upscaled using the **Real-ESRGAN** model by the specified scale factor (default is `4`).
+   
+2. **Contrast Enhancement**:
+   - **CLAHE** (Contrast Limited Adaptive Histogram Equalization) is applied to enhance the contrast of the upscaled images, improving their readability.
 
-### Example
+3. **Sharpening**:
+   - **Adaptive Unsharp Masking** is used to sharpen the processed images, bringing out finer details.
 
-Upscale images in the `documents` folder by a factor of 2 and apply a denoise strength of 0.7. The results will be saved in the `output` folder:
+### Input and Output Folders
 
-```bash
-python upscale.py documents --output_dir output --outscale 2 --denoise_strength 0.7
-```
+- **Input Folder** (`start`): Contains the original images to be processed.
+- **Output Folders**:
+  - **`output/`**: Contains the upscaled images.
+  - **`clahe_output/`**: Contains the images with enhanced contrast using CLAHE.
+  - **`sharpen_output/`**: Contains the final sharpened images after applying unsharp masking.
 
 ---
 
-## Output
+## Example
 
-The upscaled images will be saved in the specified `output_dir` folder with the suffix `_upscaled` added to their original names.
+To run the pipeline with default settings:
+
+```bash
+python pipeline.py
+```
+
+This will:
+1. Upscale images from the `start/` folder by a factor of 2 (default scale).
+2. Enhance contrast using CLAHE.
+3. Apply adaptive sharpening.
+4. Save the processed images in `output/`, `clahe_output/`, and `sharpen_output/` folders.
+
+You can modify the pipeline code to change input/output directories or any processing parameters.
 
 ---
 
@@ -78,11 +97,13 @@ The upscaled images will be saved in the specified `output_dir` folder with the 
 
 - Ensure the input images are in a supported format (e.g., `.jpg`, `.png`).
 - For best results, use high-quality input images.
-- Adjust the `--denoise_strength` parameter based on the noise level in your images.
+- The script supports adjusting noise reduction (`--denoise_strength`) and upscaling factor (`--outscale`) during the upscaling step.
+- The output images will be saved with appropriate suffixes (`_upscaled`, `_clahe`, `_sharpened`) in their respective directories.
 
 ---
 
 ## Acknowledgments
 
-- Real-ESRGAN: [GitHub Repository](https://github.com/xinntao/Real-ESRGAN)
-- OpenCV: [OpenCV Documentation](https://docs.opencv.org/)
+- **Real-ESRGAN**: [GitHub Repository](https://github.com/xinntao/Real-ESRGAN)
+- **OpenCV**: [OpenCV Documentation](https://docs.opencv.org/)
+- **CLAHE** and **Adaptive Unsharp Masking**: Custom implementations for contrast enhancement and sharpening.
