@@ -79,10 +79,9 @@ def upscale_images(input_dir='inputs', model_name='realesr-general-x4v3', output
             if img_mode == 'RGBA':
                 extension = 'png'
             if suffix == '':
-                save_path = os.path.join(output_dir, f'{imgname}{extension}')
+                save_path = os.path.join(output_dir, f'{imgname}.{extension}')
             else:
-                save_path = os.path.join(output_dir, f'{imgname}_{suffix}{extension}')
+                save_path = os.path.join(output_dir, f'{imgname}_{suffix}.{extension}')
             cv2.imwrite(save_path, output)
 
-# Example of calling the function:
-upscale_images(input_dir='start', output_dir='output', outscale=2, denoise_strength=0.5)
+

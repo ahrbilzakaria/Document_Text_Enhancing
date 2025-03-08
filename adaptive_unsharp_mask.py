@@ -13,9 +13,8 @@ def adaptive_sharpen(image, base_sigma=1.0, base_strength=1.5):
     Returns:
         Sharpened grayscale image.
     """
-    # --------------------------------------
+
     # 1. Adjust Sigma Based on Resolution
-    # --------------------------------------
     height, width = image.shape[:2]
     
     # High-resolution: Upscaled images (e.g., 4x from Real-ESRGAN)
@@ -24,9 +23,8 @@ def adaptive_sharpen(image, base_sigma=1.0, base_strength=1.5):
     else:
         sigma = min(base_sigma, 1.0)  # Target finer details
     
-    # --------------------------------------
+
     # 2. Adjust Strength Based on Contrast
-    # --------------------------------------
     # Measure local contrast (std of pixel intensities)
     contrast = np.std(image)
     
@@ -40,19 +38,10 @@ def adaptive_sharpen(image, base_sigma=1.0, base_strength=1.5):
     else:
         strength = base_strength
     
-    # --------------------------------------
+
     # 3. Apply Unsharp Masking
-    # --------------------------------------
     blurred = cv2.GaussianBlur(image, (0, 0), sigma)
     sharpened = cv2.addWeighted(image, 1.0 + strength, blurred, -strength, 0)
     
     return np.clip(sharpened, 0, 255).astype(np.uint8)
 
-# Load the image
-image = cv2.imread('./output/IMG_20250306_151247_upscaled.jpg', cv2.IMREAD_GRAYSCALE)
-
-# Apply adaptive unsharp masking
-sharpened_image = adaptive_sharpen(image)
-
-# Save or display the result
-cv2.imwrite('adaptive_sharpen_output.jpg', sharpened_image)

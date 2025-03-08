@@ -12,16 +12,15 @@ CLAHE_OUTPUT_DIR = "clahe_output"
 SHARPEN_OUTPUT_DIR = "sharpen_output"
 
 # Ensure output directories exist
-os.makedirs(UPSCALE_OUTPUT_DIR, exist_ok=True)
 os.makedirs(CLAHE_OUTPUT_DIR, exist_ok=True)
 os.makedirs(SHARPEN_OUTPUT_DIR, exist_ok=True)
 
 # Step 1: Upscale images
-print("\n🔹 Upscaling images...")
-upscale_images(input_dir=INPUT_DIR, output_dir=UPSCALE_OUTPUT_DIR, outscale=2, denoise_strength=0.5)
+print("\nUpscaling images...")
+upscale_images(input_dir=INPUT_DIR, output_dir=UPSCALE_OUTPUT_DIR, outscale=1, denoise_strength=0.5)
 
 # Step 2: Apply CLAHE for contrast enhancement
-print("\n🔹 Enhancing contrast with CLAHE...")
+print("\nEnhancing contrast with CLAHE...")
 image_paths = sorted(glob.glob(os.path.join(UPSCALE_OUTPUT_DIR, "*.*")))
 for img_path in image_paths:
     image = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
@@ -31,7 +30,7 @@ for img_path in image_paths:
         cv2.imwrite(os.path.join(CLAHE_OUTPUT_DIR, output_filename), enhanced_image)
 
 # Step 3: Apply Unsharp Masking for final sharpening
-print("\n🔹 Applying adaptive sharpening...")
+print("\nApplying adaptive sharpening...")
 clahe_paths = sorted(glob.glob(os.path.join(CLAHE_OUTPUT_DIR, "*.*")))
 for img_path in clahe_paths:
     image = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
@@ -40,4 +39,4 @@ for img_path in clahe_paths:
         output_filename = os.path.basename(img_path).replace("_clahe", "_sharpened")
         cv2.imwrite(os.path.join(SHARPEN_OUTPUT_DIR, output_filename), sharpened_image)
 
-print("\n✅ Processing complete! Sharpened images saved in:", SHARPEN_OUTPUT_DIR)
+print("\nProcessing complete! Sharpened images saved in:", SHARPEN_OUTPUT_DIR)

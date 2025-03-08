@@ -1,0 +1,44 @@
+# Ignore Python bytecode files
+*.pyc
+*.pyo
+__pycache__/
+
+# Ignore virtual environment directories
+venv/
+env/
+*.env
+
+# Ignore output and result directories
+output/
+clahe_output/
+sharpen_output/
+weights/
+
+# Ignore model files (if not committed)
+*.pth
+*.h5
+*.ckpt
+
+# Ignore log files
+*.log
+
+# Ignore temporary files
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE and editor configurations
+.idea/
+.vscode/
+*.iml
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore other directories that may contain non-source files
+start/

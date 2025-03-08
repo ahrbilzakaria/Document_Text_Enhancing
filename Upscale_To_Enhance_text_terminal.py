@@ -72,7 +72,7 @@ def upscale_images(input_dir='inputs', output_dir='results', outscale=4, denoise
                 extension = extension
             if img_mode == 'RGBA':
                 extension = 'png'
-            save_path = os.path.join(output_dir, f'{imgname}_upscaled{extension}')
+            save_path = os.path.join(output_dir, f'{imgname}_upscaled.{extension}')
             cv2.imwrite(save_path, output)
 
 if __name__ == '__main__':
