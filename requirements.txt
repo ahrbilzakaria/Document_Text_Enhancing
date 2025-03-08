@@ -3,3 +3,4 @@ realesrgan
 basicsr
 gfpgan
 torch
+torchvision
